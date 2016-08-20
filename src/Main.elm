@@ -132,12 +132,16 @@ type Msg
     | InputName String
 
 
+{-| Used in a <select>'s onchange
+-}
 changeColorDecoder : Decoder Msg
 changeColorDecoder =
     Decode.succeed ChangeColor
         |: Decode.map (colorFromString >> Maybe.withDefault Blue) targetValue
 
 
+{-| Used in a <select>'s onchange
+-}
 changeLanguageDecoder : Decoder Msg
 changeLanguageDecoder =
     Decode.succeed ChangeLanguage
@@ -195,7 +199,7 @@ viewLanguageChanger language =
 viewName : Translator -> String -> Html Msg
 viewName translate name' =
     div []
-        [ label [ for "name" ] [ text "Name" ]
+        [ label [ for "name" ] [ text <| translate Phrases.Name ]
         , input
             [ type' "text"
             , name "name"
@@ -266,5 +270,12 @@ view ({ name', color, language } as model) =
             [ viewLanguageChanger language
             , viewName translate name'
             , viewColorChanger translate color
-            , pre [] [ text << toString <| model ]
+              -- purposefully not a <pre>
+            , div
+                [ style
+                    [ ( "white-space", "pre" )
+                    , ( "font-family", "Fantasque Sans Mono, monospace" )
+                    ]
+                ]
+                [ text <| "App State: " ++ toString model ]
             ]

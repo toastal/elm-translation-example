@@ -9,6 +9,9 @@ translate phrase =
         Greeting name ->
             "Yo, " ++ name ++ "!"
 
+        Name ->
+            "Name"
+
         TextColor color ->
             "The color of this text is " ++ color ++ "."
 

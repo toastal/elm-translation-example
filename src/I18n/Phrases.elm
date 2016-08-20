@@ -7,6 +7,7 @@ module I18n.Phrases exposing (Phrase(..))
 
 type Phrase
     = Greeting String
+    | Name
     | TextColor String
     | Color
     | Red

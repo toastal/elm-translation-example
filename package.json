@@ -1,0 +1,23 @@
+{
+  "name": "elm-translation-example",
+  "version": "0.0.1a",
+  "description": "Elm Translation Example",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "elm package install -y",
+    "start": "elm-reactor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toastal/elm-translation-example.git"
+  },
+  "author": "younity",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toastal/elm-translation-example/issues"
+  },
+  "homepage": "https://github.com/toastal/elm-translation-example#readme",
+  "dependencies": {
+    "elm": "^0.17.1"
+  }
+}

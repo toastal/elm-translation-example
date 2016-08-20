@@ -12,6 +12,9 @@ translate phrase =
         TextColor color ->
             "The color of this text is " ++ color ++ "."
 
+        Color ->
+            "Color"
+
         Red ->
             "red"
 

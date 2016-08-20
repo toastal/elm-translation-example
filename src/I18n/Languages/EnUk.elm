@@ -10,7 +10,10 @@ translate phrase =
             "Cheerio, " ++ name ++ "!"
 
         TextColor color ->
-            "The colour of this text is " ++ color "."
+            "The colour of this text is " ++ color ++ "."
+
+        Color ->
+            "Colour"
 
         Red ->
             "red"

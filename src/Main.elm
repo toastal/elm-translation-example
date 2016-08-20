@@ -213,19 +213,37 @@ colorOption translate ( col, sel ) =
     option
         [ selected sel
         , value <| toString col
-        , on "change" changeColorDecoder
         ]
         [ text << translate <| colorToPhrase col ]
+
+
+colorToStyle : Color -> ( String, String )
+colorToStyle color =
+    (\hue -> ( "color", "hsl(" ++ toString hue ++ ", 55%, 45%)" )) <|
+        case color of
+            Red ->
+                0
+
+            Green ->
+                120
+
+            Blue ->
+                195
 
 
 viewColorChanger : Translator -> Color -> Html Msg
 viewColorChanger translate color =
     div []
-        [ select [] <|
+        [ label [ for "color" ] [ text <| translate Phrases.Color ]
+        , select
+            [ name "color"
+            , on "change" changeColorDecoder
+            ]
+          <|
             List.map
                 (Fn.map2 (,) identity ((==) color) >> colorOption translate)
                 [ Red, Green, Blue ]
-        , h1 []
+        , h1 [ style [ colorToStyle color ] ]
             [ text
                 << translate
                 << Phrases.TextColor

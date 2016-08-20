@@ -12,6 +12,9 @@ translate phrase =
         TextColor color ->
             "El color de este texto es de color " ++ color ++ "."
 
+        Color ->
+            "Color"
+
         Red ->
             "rojo"
 

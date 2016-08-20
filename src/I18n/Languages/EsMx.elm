@@ -1,4 +1,4 @@
-module I18n.Languages.EnUs exposing (translate)
+module I18n.Languages.EsMx exposing (translate)
 
 import I18n.Phrases exposing (Phrase(..))
 
@@ -7,16 +7,16 @@ translate : Phrase -> String
 translate phrase =
     case phrase of
         Greeting name ->
-            "Yo, " ++ name ++ "!"
+            "¡Hola, " ++ name ++ "!"
 
         TextColor color ->
-            "The color of this text is " ++ color ++ "."
+            "El color de este texto es de color " ++ color ++ "."
 
         Red ->
-            "red"
+            "rojo"
 
         Blue ->
-            "blue"
+            "azul"
 
         Green ->
-            "green"
+            "verde"

@@ -4,7 +4,9 @@ import Function.Extra as Fn
 import Html exposing (..)
 import Html.App as Html
 import Html.Attributes as Attr exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (on, onInput, targetValue)
+import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Extra as Decode exposing ((|:))
 import I18n.I18n as I18n exposing (Language(..), Translator)
 import I18n.Phrases as Phrases exposing (Phrase)
 
@@ -36,6 +38,53 @@ type Color
     = Red
     | Green
     | Blue
+
+
+{-| Derivation and Lens would clean this up
+-}
+colorToPhrase : Color -> Phrase
+colorToPhrase color =
+    case color of
+        Red ->
+            Phrases.Red
+
+        Green ->
+            Phrases.Green
+
+        Blue ->
+            Phrases.Blue
+
+
+colorFromString : String -> Maybe Color
+colorFromString cstr =
+    case cstr of
+        "Red" ->
+            Just Red
+
+        "Green" ->
+            Just Green
+
+        "Blue" ->
+            Just Blue
+
+        _ ->
+            Nothing
+
+
+languageFromString : String -> Maybe Language
+languageFromString lang =
+    case lang of
+        "EnUk" ->
+            Just EnUk
+
+        "EnUs" ->
+            Just EnUs
+
+        "EsMx" ->
+            Just EsMx
+
+        _ ->
+            Nothing
 
 
 
@@ -80,7 +129,19 @@ init { language } =
 type Msg
     = ChangeLanguage Language
     | ChangeColor Color
-    | UpdateName String
+    | InputName String
+
+
+changeColorDecoder : Decoder Msg
+changeColorDecoder =
+    Decode.succeed ChangeColor
+        |: Decode.map (colorFromString >> Maybe.withDefault Blue) targetValue
+
+
+changeLanguageDecoder : Decoder Msg
+changeLanguageDecoder =
+    Decode.succeed ChangeLanguage
+        |: Decode.map (languageFromString >> Maybe.withDefault EnUs) targetValue
 
 
 
@@ -97,7 +158,7 @@ update msg model =
             ChangeColor color ->
                 { model | color = color }
 
-            UpdateName name' ->
+            InputName name' ->
                 { model | name' = name' }
 
 
@@ -107,7 +168,11 @@ update msg model =
 
 langOption : ( Language, Bool ) -> Html Msg
 langOption ( lang, sel ) =
-    option [ selected sel ] <|
+    option
+        [ selected sel
+        , value <| toString lang
+        ]
+    <|
         flip (::) [] <|
             case lang of
                 EnUk ->
@@ -122,22 +187,9 @@ langOption ( lang, sel ) =
 
 viewLanguageChanger : Language -> Html Msg
 viewLanguageChanger language =
-    select [] <|
+    select [ on "change" changeLanguageDecoder ] <|
         List.map (Fn.map2 (,) identity ((==) language) >> langOption)
             [ EnUs, EnUk, EsMx ]
-
-
-colorToPhrase : Color -> Phrase
-colorToPhrase color =
-    case color of
-        Red ->
-            Phrases.Red
-
-        Green ->
-            Phrases.Green
-
-        Blue ->
-            Phrases.Blue
 
 
 viewName : Translator -> String -> Html Msg
@@ -148,7 +200,7 @@ viewName translate name' =
             [ type' "text"
             , name "name"
             , value name'
-            , onInput UpdateName
+            , onInput InputName
             ]
             []
         , h1 []
@@ -158,7 +210,11 @@ viewName translate name' =
 
 colorOption : Translator -> ( Color, Bool ) -> Html Msg
 colorOption translate ( col, sel ) =
-    option [ selected sel ]
+    option
+        [ selected sel
+        , value <| toString col
+        , on "change" changeColorDecoder
+        ]
         [ text << translate <| colorToPhrase col ]
 
 
@@ -181,7 +237,7 @@ viewColorChanger translate color =
 
 
 view : Model -> Html Msg
-view { name', color, language } =
+view ({ name', color, language } as model) =
     let
         -- This is our translation function that we will pass around
         translate : Translator
@@ -192,4 +248,5 @@ view { name', color, language } =
             [ viewLanguageChanger language
             , viewName translate name'
             , viewColorChanger translate color
+            , pre [] [ text << toString <| model ]
             ]

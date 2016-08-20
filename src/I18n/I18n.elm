@@ -2,7 +2,9 @@ module I18n.I18n exposing (Language(..), Translator, toLanguage, translate)
 
 import Regex
 import String
+import I18n.Languages.EnUk as EnUk
 import I18n.Languages.EnUs as EnUs
+import I18n.Languages.EsMx as EsMx
 import I18n.Phrases exposing (Phrase)
 
 
@@ -65,8 +67,11 @@ a langage and hand around the application for translations
 translate : Language -> Translator
 translate lang =
     case lang of
+        EnUk ->
+            EnUk.translate
+
         EnUs ->
             EnUs.translate
 
-        _ ->
-            EnUs.translate
+        EsMx ->
+            EsMx.translate

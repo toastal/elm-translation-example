@@ -1,4 +1,4 @@
-module I18n.I18n exposing (Language, Translator, toLanguage, translate)
+module I18n.I18n exposing (Language(..), Translator, toLanguage, translate)
 
 import Regex
 import String
@@ -39,7 +39,7 @@ toLanguage lang =
                 _ ->
                     ( Nothing, Nothing )
     in
-        case ( language, country ) of
+        case locale of
             ( Just "en", Just "uk" ) ->
                 EnUk
 

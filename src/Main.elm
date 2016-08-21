@@ -14,10 +14,14 @@ import I18n.Phrases as Phrases exposing (Phrase)
 --main : Program Flags
 
 
+{-| Swap these comments at build… `elm-reactor` can’t pass
+in flags :(
+-}
 main : Program Never
 main =
     --Html.programWithFlags
     Html.program
+        -- { init = init
         { init = initWoFlags
         , view = view
         , update = update

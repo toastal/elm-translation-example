@@ -22,13 +22,16 @@ our support languages … also has defaults
 toLanguage : String -> Language
 toLanguage lang =
     let
-        -- change for your use case
+        -- will split our string on non-chars, take the first
+        -- 2 matches, and lowercase them
         codeFinder : String -> List String
         codeFinder =
             List.map String.toLower
                 << List.take 2
                 << Regex.split (Regex.AtMost 2) (Regex.regex "[^A-Za-z]")
 
+        -- pattern that regex into Tuple2 of Maybes
+        -- containing the ( language code, country code )
         locale : ( Maybe String, Maybe String )
         locale =
             case codeFinder lang of
@@ -41,6 +44,8 @@ toLanguage lang =
                 _ ->
                     ( Nothing, Nothing )
     in
+        -- Using pattern matching and wildcards, we can
+        -- choose the appropriate language and fallbacks
         case locale of
             ( Just "en", Just "uk" ) ->
                 EnUk

@@ -11,12 +11,10 @@ import I18n.I18n as I18n exposing (Language(..), Translator)
 import I18n.Phrases as Phrases exposing (Phrase)
 
 
---main : Program Flags
-
-
 {-| Swap these comments at build… `elm-reactor` can’t pass
 in flags :(
 -}
+--main : Program Flags
 main : Program Never
 main =
     --Html.programWithFlags

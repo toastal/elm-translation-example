@@ -4,12 +4,14 @@
     "repository": "https://github.com/toastal/elm-translation-example.git",
     "license": "BSD3",
     "source-directories": [
-        "src"
+        "src-fallback-support"
     ],
     "exposed-modules": [],
     "dependencies": {
         "Fresheyeball/elm-function-extra": "1.1.0 <= v < 2.0.0",
         "elm-community/json-extra": "1.0.0 <= v < 2.0.0",
+        "elm-community/list-extra": "3.1.0 <= v < 4.0.0",
+        "elm-community/maybe-extra": "1.1.0 <= v < 2.0.0",
         "elm-lang/core": "4.0.5 <= v < 5.0.0",
         "elm-lang/html": "1.1.0 <= v < 2.0.0"
     },

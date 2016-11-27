@@ -1,8 +1,7 @@
 module Main exposing (main)
 
-import Function.Extra as Fn
+import Function as Fn
 import Html exposing (..)
-import Html.App as Html
 import Html.Attributes as Attr exposing (..)
 import Html.Events exposing (on, onInput, targetValue)
 import Json.Decode as Decode exposing (Decoder)
@@ -14,8 +13,13 @@ import I18n.Phrases as Phrases exposing (Phrase)
 {-| Swap these comments at build… `elm-reactor` can’t pass
 in flags :(
 -}
+
+
+
 --main : Program Flags
-main : Program Never
+
+
+main : Program Never Model Msg
 main =
     --Html.programWithFlags
     Html.program
@@ -94,7 +98,7 @@ languageFromString lang =
 
 
 type alias Model =
-    { name' : String
+    { name_ : String
     , color : Color
     , language : Language
     }
@@ -164,8 +168,8 @@ update msg model =
             ChangeColor color ->
                 { model | color = color }
 
-            InputName name' ->
-                { model | name' = name' }
+            InputName name_ ->
+                { model | name_ = name_ }
 
 
 
@@ -178,17 +182,18 @@ langOption ( lang, sel ) =
         [ selected sel
         , value <| toString lang
         ]
+        << flip (::) []
+        << text
     <|
-        flip (::) [] <|
-            case lang of
-                EnUk ->
-                    text "en_UK 🇬🇧"
+        case lang of
+            EnUk ->
+                "en_UK 🇬🇧"
 
-                EnUs ->
-                    text "en_US 🇺🇸"
+            EnUs ->
+                "en_US 🇺🇸"
 
-                EsMx ->
-                    text "es_MX 🇲🇽"
+            EsMx ->
+                "es_MX 🇲🇽"
 
 
 viewLanguageChanger : Language -> Html Msg
@@ -199,18 +204,18 @@ viewLanguageChanger language =
 
 
 viewName : Translator -> String -> Html Msg
-viewName translate name' =
+viewName translate name_ =
     div []
         [ label [ for "name" ] [ text <| translate Phrases.Name ]
         , input
-            [ type' "text"
+            [ type_ "text"
             , name "name"
-            , value name'
+            , value name_
             , onInput InputName
             ]
             []
         , h1 []
-            [ text << translate <| Phrases.Greeting name' ]
+            [ text << translate <| Phrases.Greeting name_ ]
         ]
 
 
@@ -261,7 +266,7 @@ viewColorChanger translate color =
 
 
 view : Model -> Html Msg
-view ({ name', color, language } as model) =
+view ({ name_, color, language } as model) =
     let
         -- This is our translation function that we will pass around
         translate : Translator
@@ -270,7 +275,7 @@ view ({ name', color, language } as model) =
     in
         div []
             [ viewLanguageChanger language
-            , viewName translate name'
+            , viewName translate name_
             , viewColorChanger translate color
               -- purposefully not a <pre>
             , div

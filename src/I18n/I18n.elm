@@ -50,6 +50,12 @@ toLanguage lang =
             ( Just "en", Just "uk" ) ->
                 EnUk
 
+            ( Just "en", Just "au" ) ->
+                EnUk
+
+            ( Just "en", Just "nz" ) ->
+                EnUk
+
             ( Just "en", _ ) ->
                 EnUs
 
@@ -67,7 +73,7 @@ type alias Translator =
 
 
 {-| Top-level function that we will partially apply with
-a langage and hand around the application for translations
+a language and hand around the application for translations
 -}
 translate : Language -> Translator
 translate lang =

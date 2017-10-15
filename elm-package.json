@@ -2,7 +2,7 @@
     "version": "1.0.0",
     "summary": "Elm Translation Example",
     "repository": "https://github.com/toastal/elm-translation-example.git",
-    "license": "BSD3",
+    "license": "MIT",
     "source-directories": [
         "src"
     ],

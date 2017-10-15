@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/toastal/elm-translation-example.git"
   },
-  "author": "younity",
-  "license": "ISC",
+  "author": "toastal",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/toastal/elm-translation-example/issues"
   },

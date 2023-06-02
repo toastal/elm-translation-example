@@ -1,0 +1,12 @@
+# NO to Microsoft
+*.code-workspace
+.github/
+.vscode/
+
+# NO to Docker
+*Dockerfile*
+*docker-compose*
+
+# NO to invasive configs
+.husky/
+.pre-commit-config.{yaml,yml}

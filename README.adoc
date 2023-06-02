@@ -1,0 +1,5 @@
+= Elm Translations Example
+
+This repository is on the non-profit FOSS Git forge @ Codeberg: https://codeberg.org/toastal/elm-translation-example
+
+https://toast.al/posts/code/2016-08-20-seer-stones-translations-using-unions-in-elm.html[Blog entry for this, Seer Stones]
